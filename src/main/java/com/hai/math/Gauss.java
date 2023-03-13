@@ -1,4 +1,4 @@
-package com.duy.math;
+package com.hai.math;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -171,7 +171,10 @@ public class Gauss {
             }
             case 2 -> {
                 try {
-                    FileInputStream path = new FileInputStream("inputTest/20x20.txt");
+                    scanner.nextLine();
+                    System.out.println("введите желаемое имя файла");
+                    String fileName = scanner.nextLine();
+                    FileInputStream path = new FileInputStream("inputTest/"+fileName+".txt");
                     DataInputStream inFile = new DataInputStream(path);
                     BufferedReader br = new BufferedReader(new InputStreamReader(inFile));
                     String data;
