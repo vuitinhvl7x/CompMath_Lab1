@@ -18,7 +18,7 @@ public class Gauss {
         return det;
 
     }
-    public double[] getNewDiscrepancy(double A[][],double[] B, double[] solution)
+    public double[] getNewDiscrepancyVector(double A[][],double[] B, double[] solution)
     {
         int lengthOfMatrix = A.length;
         double[] dis = new double[lengthOfMatrix];
@@ -74,8 +74,8 @@ public class Gauss {
         }
         printSolution(solution);
 
-        System.out.println("Вектор невязки: ");
-        double[] dis = getNewDiscrepancy(A,B, solution);
+        System.out.println("Residual vector: ");
+        double[] dis = getNewDiscrepancyVector(A,B, solution);
         for (double di : dis) System.out.printf("%.2f\s", (double) Math.round(di * 1000) / 1000);
         System.out.println();
 
@@ -86,12 +86,12 @@ public class Gauss {
         System.out.println();
         int lengthOfMatrix = B.length;
         double tempD=getDet(A, lengthOfMatrix, countSwapRow);
-        System.out.println("Определитель матрицы равен: "+tempD);
+        System.out.println("The matrix determinant is: "+tempD);
         if(tempD==0){
-            System.out.println("Определитель равен 0, нет решений");
+            System.out.println("Determinant is 0, no solutions");
             return 0;
         }
-        System.out.println("\nРядно-эшелонная форма : ");
+        System.out.println("\nRow-echelon form: ");
         for (int i = 0; i < lengthOfMatrix; i++)
         {
             for (int j = 0; j < lengthOfMatrix; j++)
@@ -105,7 +105,7 @@ public class Gauss {
     public void printSolution(double[] solution)
     {
         int lengthOfMatrix = solution.length;
-        System.out.println("\nНайдены корни СЛАУ : ");
+        System.out.println("\nFound the roots of SLAU: ");
         for (int i = 0; i < lengthOfMatrix; i++)
             System.out.printf("%.3f ", solution[i]);
         System.out.println();
@@ -115,30 +115,30 @@ public class Gauss {
         int lengthOfMatrix = 0;
         ArrayList<Double> arrayList = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите:");
-        System.out.println("1 - для ввода с консоли");
-        System.out.println("2 - для чтения файла");
+        System.out.println("Enter: ");
+        System.out.println("1 - for console input");
+        System.out.println("2 - to read the file");
         int choose = scanner.nextInt();
         while (!(choose == 1 || choose == 2)) {
-            System.out.println("Ошибка ввода!");
-            System.out.println("Введите:");
-            System.out.println("1 - для ввода с консоли");
-            System.out.println("2 - для чтения файла");
+            System.out.println("Input Error!");
+            System.out.println("Enter:");
+            System.out.println("1 - for console input");
+            System.out.println("2 - to read the file");
             choose = scanner.nextInt();
         }
         switch (choose) {
             case 1 -> {
-                System.out.println("Укажите размерносить матрицы: ");
+                System.out.println("Specify the matrix dimension: ");
                 lengthOfMatrix = scanner.nextInt();
 
                 if (lengthOfMatrix == 1)
-                    System.out.println("Размерность СЛАУ не может быть равна одному");
+                    System.out.println("The dimension of SLAU cannot be equal to one");
                 else if (lengthOfMatrix == 2) {
-                    System.out.println("Формат ввода: 'a11 a12 = b1'");
-                    System.out.println("Введите коффициенты через пробел:");
+                    System.out.println("Input Format: 'a11 a12 = b1'");
+                    System.out.println("Enter coefficients separated by spaces:");
                 } else {
-                    System.out.println("Формат ввода: 'a11 ... a1" + lengthOfMatrix + " = b1'");
-                    System.out.println("Введите коффициенты через пробел:");
+                    System.out.println("Input Format: 'a11 ... a1" + lengthOfMatrix + " = b1'");
+                    System.out.println("Enter coefficients separated by spaces:");
                 }
 
                 try {
@@ -158,7 +158,7 @@ public class Gauss {
                                 }
                             }
                             if (countDot > 1 || m.find()) {
-                                System.out.println("Ошибка! Ещё раз");
+                                System.out.println("Error! Again");
                                 k--;
                                 continue;
                             }
@@ -166,13 +166,13 @@ public class Gauss {
                         }
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Ошибка ввода!  Проверьте, что дробные числа записаны через запятую");
+                    System.out.println("Input Error! Check that fractional numbers are separated by commas");
                 }
             }
             case 2 -> {
                 try {
                     scanner.nextLine();
-                    System.out.println("введите желаемое имя файла");
+                    System.out.println("Enter the desired file name");
                     String fileName = scanner.nextLine();
                     FileInputStream path = new FileInputStream("inputTest/"+fileName+".txt");
                     DataInputStream inFile = new DataInputStream(path);
@@ -187,15 +187,15 @@ public class Gauss {
                         lengthOfMatrix++;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Ошибка ввода!  Проверьте, что дробные числа записаны через точку");
+                    System.out.println("Input Error! Check that fractional numbers are written with a dot");
                     System.exit(0);
                 }
-                System.out.println("Размерность матрицы: ");
+                System.out.println("Matrix dimension: ");
                 System.out.println(lengthOfMatrix);
                 System.out.println();
             }
         }
-        // AX =B
+
         double[][] A = new double[lengthOfMatrix][lengthOfMatrix];
         double[] B = new double[lengthOfMatrix];
 
